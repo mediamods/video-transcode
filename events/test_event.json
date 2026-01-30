@@ -1,0 +1,15 @@
+{
+  "Records": [
+    {
+      "messageId": "test-message-001",
+      "receiptHandle": "test-receipt-handle",
+      "body": "{\"docId\": \"test-doc-123\", \"versionId\": \"v1\", \"s3Key\": \"uploads/test-doc-123/video.mp4\"}",
+      "attributes": {},
+      "messageAttributes": {},
+      "md5OfBody": "",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:000000000000:video-processing-queue",
+      "awsRegion": "us-east-1"
+    }
+  ]
+}
