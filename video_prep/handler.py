@@ -117,9 +117,7 @@ def process_video(config: VideoProcessingConfig) -> VideoMetadata:
         )
         metadata.video_data = video_data
 
-        export_video_dir = config.export_dir / "video"
-        export_video_dir.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(video_path), str(export_video_dir / "video.mp4"))
+        shutil.move(str(video_path), str(config.export_dir / "video.mp4"))
 
         # ---- Montage -----------------------------------------------------
         montage_data, montage_path = make_montage(
@@ -137,10 +135,10 @@ def process_video(config: VideoProcessingConfig) -> VideoMetadata:
     if config.chapter_file and config.chapter_file.exists():
         metadata.chapters = parse_chapters(config.chapter_file)
 
-    # ---- Write .avd metadata file ----------------------------------------
-    avd_path = config.export_dir / f"{config.video_id}.avd"
-    avd_path.write_text(json.dumps(metadata.to_dict()))
-    logger.info("Wrote metadata: %s", avd_path)
+    # ---- Write metadata file -----------------------------------------------
+    meta_path = config.export_dir / "meta.json"
+    meta_path.write_text(json.dumps(metadata.to_dict()))
+    logger.info("Wrote metadata: %s", meta_path)
 
     return metadata
 
@@ -186,8 +184,8 @@ def process_chapters_only(
     if chapter_file.exists():
         metadata.chapters = parse_chapters(chapter_file)
 
-    avd_path = export_dir / f"{video_id}.avd"
-    avd_path.write_text(json.dumps(metadata.to_dict()))
-    logger.info("Wrote chapters-only metadata: %s", avd_path)
+    meta_path = export_dir / "meta.json"
+    meta_path.write_text(json.dumps(metadata.to_dict()))
+    logger.info("Wrote chapters-only metadata: %s", meta_path)
 
     return metadata
